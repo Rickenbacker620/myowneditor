@@ -1,11 +1,11 @@
+#include "kilo/buffer.h"
+
+#include "kilo/main.h"
+
 #include <stdlib.h>
 #include <string.h>
 
-#include "kilo/buffer.h"
-#include "kilo/main.h"
-
-void
-abAppend(struct abuf *ab, const char *s, int len)
+void abAppend(struct abuf *ab, const char *s, int len)
 {
     char *new = realloc(ab->b, ab->len + len);
     if (new == NULL)
@@ -15,8 +15,7 @@ abAppend(struct abuf *ab, const char *s, int len)
     ab->len += len;
 }
 
-void
-abFree(struct abuf *ab)
+void abFree(struct abuf *ab)
 {
     free(ab->b);
 }

@@ -1,15 +1,15 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-
 #include "kilo/output.h"
+
 #include "kilo/main.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 extern struct editorConfig E;
 
-void
-editorRefreshScreen()
+void editorRefreshScreen()
 {
     struct abuf ab = ABUF_INIT;
 
@@ -28,8 +28,7 @@ editorRefreshScreen()
     abFree(&ab);
 }
 
-void
-editorDrawRows(struct abuf *ab)
+void editorDrawRows(struct abuf *ab)
 {
     int y;
     for (y = 0; y < E.screenrows; y++)

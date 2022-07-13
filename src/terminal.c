@@ -1,18 +1,18 @@
-#include <termios.h>
-#include <unistd.h>
+#include "kilo/terminal.h"
+
+#include "kilo/main.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/ioctl.h>
 #include <string.h>
-
-#include "kilo/terminal.h"
-#include "kilo/main.h"
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <unistd.h>
 
 extern struct termios orig_termios;
 extern struct editorConfig E;
 
-void
-die(const char *s)
+void die(const char *s)
 {
     write(STDOUT_FILENO, "\x1b[2J", 4);
     write(STDOUT_FILENO, "\x1b[H", 3);
@@ -21,15 +21,13 @@ die(const char *s)
     exit(1);
 }
 
-void
-disableRawMode()
+void disableRawMode()
 {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1)
         die("tcsetattr");
 }
 
-void
-enableRawMode()
+void enableRawMode()
 {
     if (tcgetattr(STDIN_FILENO, &E.orig_termios) == -1)
         die("tcgetattr");
@@ -45,9 +43,7 @@ enableRawMode()
         die("tcsetattr");
 }
 
-
-int
-getWindowSize(int *rows, int *cols)
+int getWindowSize(int *rows, int *cols)
 {
     struct winsize ws;
     if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0)
@@ -64,8 +60,7 @@ getWindowSize(int *rows, int *cols)
     }
 }
 
-int
-getCursorPosition(int *rows, int *cols)
+int getCursorPosition(int *rows, int *cols)
 {
     char buf[32];
     unsigned int i = 0;

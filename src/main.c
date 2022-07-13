@@ -3,25 +3,25 @@
 #define _BSD_SOURCE
 #define _GNU_SOURCE
 
+#include "kilo/main.h"
+
+#include "kilo/input.h"
+#include "kilo/output.h"
+#include "kilo/terminal.h"
+
 #include <ctype.h>
 #include <errno.h>
-#include <termios.h>
-#include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/ioctl.h>
-#include <stdio.h>
-
-#include "kilo/main.h"
-#include "kilo/input.h"
-#include "kilo/terminal.h"
-#include "kilo/output.h"
+#include <termios.h>
+#include <unistd.h>
 
 struct termios orig_termios;
 struct editorConfig E;
 
-void
-editorOpen(char *filename)
+void editorOpen(char *filename)
 {
     FILE *fp = fopen(filename, "r");
     if (!fp)
@@ -44,10 +44,7 @@ editorOpen(char *filename)
     fclose(fp);
 }
 
-/*** input ***/
-
-void
-initEditor()
+void initEditor()
 {
     E.cx = 0;
     E.cy = 0;
@@ -57,8 +54,7 @@ initEditor()
         die("getWindowSize");
 }
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     enableRawMode();
     initEditor();

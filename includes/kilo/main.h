@@ -19,7 +19,6 @@ enum editorKey
 
 #define KILO_VERSION "0.0.1"
 
-
 typedef struct erow
 {
     int size;
@@ -35,7 +34,6 @@ struct editorConfig
     erow row;
     struct termios orig_termios;
 };
-
 
 struct abuf
 {

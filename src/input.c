@@ -1,15 +1,15 @@
-#include <unistd.h>
-#include <errno.h>
-#include <stdlib.h>
+#include "kilo/input.h"
 
 #include "kilo/main.h"
-#include "kilo/input.h"
 #include "kilo/terminal.h"
+
+#include <errno.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 extern struct editorConfig E;
 
-int
-editorReadKey()
+int editorReadKey()
 {
     int nread;
     char c;
@@ -74,9 +74,7 @@ editorReadKey()
     }
 }
 
-
-void
-editorProcessKeypress()
+void editorProcessKeypress()
 {
     int c = editorReadKey();
     switch (c)
@@ -105,8 +103,7 @@ editorProcessKeypress()
     }
 }
 
-void
-editorMoveCursor(int key)
+void editorMoveCursor(int key)
 {
     switch (key)
     {
