@@ -1,0 +1,4 @@
+BasedOnStyle: Microsoft
+AlwaysBreakAfterReturnType: TopLevelDefinitions
+AllowShortCaseLabelsOnASingleLine: true
+SortIncludes: false

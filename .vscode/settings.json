@@ -5,6 +5,8 @@
         "*.wxss": "css",
         "*.wxs": "javascript",
         "*.nas": "asm-intel-x86-generic",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "terminal.h": "c",
+        "main.h": "c"
     }
 }
