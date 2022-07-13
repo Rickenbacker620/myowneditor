@@ -63,7 +63,7 @@ main(int argc, char *argv[])
     enableRawMode();
     initEditor();
 
-    editorOpen("../horay");
+    editorOpen("../texts/horay");
     // if (argc >= 2)
     // {
     //     editorOpen(argv[1]);
