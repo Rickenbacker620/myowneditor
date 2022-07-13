@@ -1,5 +1,4 @@
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#pragma once
 
 #include "termios.h"
 
@@ -38,4 +37,12 @@ struct editorConfig
 };
 
 
-#endif
+struct abuf
+{
+    char *b;
+    int len;
+};
+
+// clang-format off
+#define ABUF_INIT  { NULL, 0 }
+// clang-format on
