@@ -12,13 +12,21 @@ extern struct editorConfig E;
 
 void editorScroll()
 {
-    if (E.cy < E.rowoff)
+    if (E.cy < E.rowoff) // cursor go out of bound(up)
     {
         E.rowoff = E.cy;
     }
-    if (E.cy >= E.rowoff + E.screenrows)
+    if (E.cy >= E.rowoff + E.screenrows) // cursor go out of bound(down)
     {
         E.rowoff = E.cy - E.screenrows + 1;
+    }
+    if (E.cx < E.coloff) // cursor go out of bound(left)
+    {
+        E.coloff = E.cx;
+    }
+    if (E.cx >= E.coloff + E.screencols) // cursor go out of bound(right)
+    {
+        E.coloff = E.cx - E.screencols + 1;
     }
 }
 
@@ -34,7 +42,7 @@ void editorRefreshScreen()
     editorDrawRows(&ab);
 
     char buf[32];
-    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", (E.cy - E.rowoff) + 1, E.cx + 1);
+    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", (E.cy - E.rowoff) + 1, (E.cx - E.coloff) + 1);
     abAppend(&ab, buf, strlen(buf));
 
     abAppend(&ab, "\x1b[?25h", 6);
@@ -74,10 +82,12 @@ void editorDrawRows(struct abuf *ab)
         }
         else
         {
-            int len = E.row[filerow].size;
+            int len = E.row[filerow].size - E.coloff;
+            if (len < 0)
+                len = 0;
             if (len > E.screencols) // display columns less than window size
                 len = E.screencols;
-            abAppend(ab, E.row[filerow].chars, len);
+            abAppend(ab, &E.row[filerow].chars[E.coloff], len);
         }
         abAppend(ab, "\x1b[K", 3);
         if (y < E.screenrows - 1)

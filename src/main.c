@@ -26,6 +26,7 @@ void initEditor()
     E.cx = 0;
     E.cy = 0;
     E.rowoff = 0;
+    E.coloff = 0;
     E.numrows = 0;
     E.row = NULL;
 
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
     enableRawMode();
     initEditor();
 
-    editorOpen("./texts/horay");
+    editorOpen("../texts/horay");
     // if (argc >= 2)
     // {
     //     editorOpen(argv[1]);
