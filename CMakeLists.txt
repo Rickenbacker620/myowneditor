@@ -7,7 +7,7 @@ add_custom_target(
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
 
-set(CMAKE_C_FLAGS_DEBUG "-g -Wall -Wextra")
+set(CMAKE_C_FLAGS_DEBUG "-g -Werror -Wall -Wextra")
 
 set(EXECUTABLE_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/bin/)
 

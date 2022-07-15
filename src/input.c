@@ -120,7 +120,7 @@ void editorMoveCursor(int key)
         }
         break;
     case ARROW_RIGHT:
-        if (row && E.cx != row->size)
+        if (row && E.cx < row->size)
         {
             E.cx++;
         }
@@ -128,8 +128,8 @@ void editorMoveCursor(int key)
         {
             E.cy++;
             E.cx = 0;
-            break;
         }
+        break;
     case ARROW_UP:
         if (E.cy != 0)
         {

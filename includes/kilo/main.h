@@ -3,6 +3,7 @@
 #include "termios.h"
 
 #define CTRL_KEY(k) ((k)&0x1f)
+#define KILO_TAB_STOP 8
 
 enum editorKey
 {
@@ -22,12 +23,15 @@ enum editorKey
 typedef struct erow
 {
     int size;
+    int rsize;
     char *chars;
+    char *render;
 } erow;
 
 struct editorConfig
 {
     int cx, cy;
+    int rx;
     int rowoff;
     int coloff;
     int screenrows;
