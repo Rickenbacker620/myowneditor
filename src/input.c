@@ -113,13 +113,23 @@ void editorMoveCursor(int key)
         {
             E.cx--;
         }
+        else if (E.cy > 0) // move cursor to line above when press <- at start of line
+        {
+            E.cy--;
+            E.cx = E.row[E.cy].size;
+        }
         break;
     case ARROW_RIGHT:
         if (row && E.cx != row->size)
         {
             E.cx++;
         }
-        break;
+        else if (row && E.cx == row->size) // move cursor to next line when press -> at end of line
+        {
+            E.cy++;
+            E.cx = 0;
+            break;
+        }
     case ARROW_UP:
         if (E.cy != 0)
         {
@@ -132,5 +142,23 @@ void editorMoveCursor(int key)
             E.cy++;
         }
         break;
+    }
+
+    // snap cursor to end of line
+    // example:
+
+    // wrong move down:
+    // asdasdadasdassadasda|d|
+    // asdasdsa            | |
+
+    // correct move down:
+    // asdasdadasdassadasda|d|
+    // asdasds|a|
+
+    row = (E.cy >= E.numrows) ? NULL : &E.row[E.cy];
+    int rowlen = row ? row->size : 0;
+    if (E.cx > rowlen)
+    {
+        E.cx = rowlen;
     }
 }
