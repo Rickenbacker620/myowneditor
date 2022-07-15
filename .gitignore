@@ -1,6 +1,0 @@
-*.d
-*.o
-bin/
-build
-.cache
-texts/

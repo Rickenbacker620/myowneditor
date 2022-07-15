@@ -1,1 +1,0 @@
-find includes src -regex ".*\.\(c\|h\)$" | xargs clang-format -i
