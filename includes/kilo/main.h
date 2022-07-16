@@ -38,6 +38,7 @@ struct editorConfig
     int screencols;
     int numrows;
     erow *row;
+    char *filename;
     struct termios orig_termios;
 };
 
