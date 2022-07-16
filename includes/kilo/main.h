@@ -6,6 +6,8 @@
 
 #define CTRL_KEY(k) ((k)&0x1f)
 #define KILO_TAB_STOP 8
+#define KILO_VERSION "0.0.1"
+#define KILO_QUIT_TIMES 3;
 
 enum editorKey
 {
@@ -21,7 +23,6 @@ enum editorKey
     PAGE_DOWN
 };
 
-#define KILO_VERSION "0.0.1"
 
 typedef struct erow
 {
