@@ -6,6 +6,7 @@ add_executable(kilo
     buffer.c
     fileio.c
     rowoperations.c
+    editoroperations.c
     )
 
 target_include_directories(kilo PUBLIC ../includes)
