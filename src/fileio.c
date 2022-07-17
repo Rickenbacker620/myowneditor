@@ -1,5 +1,6 @@
 #include "kilo/fileio.h"
 
+#include "kilo/input.h"
 #include "kilo/main.h"
 #include "kilo/output.h"
 #include "kilo/rowoperations.h"
@@ -48,7 +49,7 @@ void editorOpen(char *filename)
     {
         while (linelen > 0 && (line[linelen - 1] == '\n' || line[linelen - 1] == '\r')) // strip return
             linelen--;
-        editorAppendRow(line, linelen);
+        editorInsertRow(E.numrows, line, linelen);
     }
     free(line);
     fclose(fp);
@@ -58,7 +59,14 @@ void editorOpen(char *filename)
 void editorSave()
 {
     if (E.filename == NULL)
-        return;
+    {
+        E.filename = editorPrompt("Save as: %s (ESC to cancel)");
+        if (E.filename == NULL)
+        {
+            editorSetStatusMessage("Save aborted");
+            return;
+        }
+    }
     int len;
     char *buf = editorRowsToString(&len);
     int fd = open(E.filename, O_RDWR | O_CREAT, 0644);

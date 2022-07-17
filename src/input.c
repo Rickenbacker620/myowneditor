@@ -6,6 +6,7 @@
 #include "kilo/output.h"
 #include "kilo/terminal.h"
 
+#include <ctype.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -84,9 +85,7 @@ void editorProcessKeypress()
     int c = editorReadKey();
     switch (c)
     {
-    case 'r':
-        /* TODO */
-        break;
+    case '\r': editorInsertNewline(); break;
     case CTRL_KEY('q'):
         if (E.dirty && quit_times > 0)
         {
@@ -112,7 +111,9 @@ void editorProcessKeypress()
     case BACKSPACE:
     case CTRL_KEY('h'):
     case DEL_KEY:
-        /* TODO */
+        if (c == DEL_KEY)
+            editorMoveCursor(ARROW_RIGHT);
+        editorDelChar();
         break;
 
     case PAGE_UP:
@@ -167,7 +168,8 @@ void editorMoveCursor(int key)
         {
             E.cx++;
         }
-        else if (row && E.cx == row->size) // move cursor to next line when press -> at end of line
+        else if (row && E.cx == row->size) // move cursor to next line when press
+                                           // -> at end of line
         {
             E.cy++;
             E.cx = 0;
@@ -203,5 +205,49 @@ void editorMoveCursor(int key)
     if (E.cx > rowlen)
     {
         E.cx = rowlen;
+    }
+}
+
+char *editorPrompt(char *prompt)
+{
+    size_t bufsize = 128;
+    char *buf = malloc(bufsize);
+    size_t buflen = 0;
+    buf[0] = '\0';
+    while (1)
+    {
+        editorSetStatusMessage(prompt, buf);
+        editorRefreshScreen();
+
+        int c = editorReadKey();
+        if (c == DEL_KEY || c == CTRL_KEY('h') || c == BACKSPACE)
+        {
+            if (buflen != 0)
+                buf[--buflen] = '\0';
+        }
+        else if (c == '\x1b')
+        {
+            editorSetStatusMessage("");
+            free(buf);
+            return NULL;
+        }
+        else if (c == '\r')
+        {
+            if (buflen != 0)
+            {
+                editorSetStatusMessage("");
+                return buf;
+            }
+        }
+        else if (!iscntrl(c) && c < 128)
+        {
+            if (buflen == bufsize - 1)
+            {
+                bufsize *= 2;
+                buf = realloc(buf, bufsize);
+            }
+            buf[buflen++] = c;
+            buf[buflen] = '\0';
+        }
     }
 }

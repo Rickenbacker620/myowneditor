@@ -23,7 +23,6 @@ enum editorKey
     PAGE_DOWN
 };
 
-
 typedef struct erow
 {
     int size;
