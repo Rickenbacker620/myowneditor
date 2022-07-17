@@ -6,4 +6,4 @@ void editorProcessKeypress();
 
 void editorMoveCursor(int key);
 
-char *editorPrompt(char *prompt);
+char *editorPrompt(char *prompt, void (*callback)(char *, int));
